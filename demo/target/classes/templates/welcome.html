@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        .home-content {
+            display: none;
+            text-align: center;
+        }
+        .welcome-content {
+            text-align: center;
+        }
+        .image-container img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-content">
+        <h1>Welcome to the Spring Boot Application!</h1>
+        <div class="image-container">
+            <img src="/images/welcome-image.jpeg" alt="Welcome Image" width="500">
+        </div>
+        <p>Click below to continue to the Home Page.</p>
+        <button onclick="showHomeContent()">Go to Home Page</button>
+
+        <h2 id="message"></h2> <!-- Element to display the message -->
+
+    </div>
+
+    <div class="home-content">
+        <h2>Home Page</h2>
+        <p>This is the Home Page after you clicked the button!</p>
+    </div>
+
+    <script>
+        // Function to show the home page content after click
+        function showHomeContent() {
+            // Hide welcome content and show home content
+            document.querySelector('.welcome-content').style.display = 'none';
+            document.querySelector('.home-content').style.display = 'block';
+        }
+
+        // Function to fetch the welcome message from the backend
+        function fetchWelcomeMessage() {
+            // Fetch the data from the Spring Boot backend API
+            fetch('/api/welcomeMessage')  // This corresponds to the API URL in Spring Boot
+                .then(response => response.text())  // Get the response as text
+                .then(data => {
+                    document.getElementById('message').innerText = data;  // Display the response in the <h2> element
+                })
+                .catch(error => {
+                    console.error('Error:', error);  // Handle any errors
+                });
+        }
+
+        // Call the function to fetch the message when the page loads
+        fetchWelcomeMessage();
+    </script>
+</body>
+</html>
